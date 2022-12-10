@@ -1,0 +1,429 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Final Project - Azure Cognitive Services (Language Services)",
+        "version": "1.0.6",
+        "title": "Swagger Documentation for Final Project"
+    },
+    "host": "http://164.92.106.251:5000/",
+    "tags": [
+        {
+            "name": "Language Services",
+            "description": "Entity Linking, Detect Language, PII, Q/A"
+        }
+    ],
+    "paths": {
+        "/detect_language": {
+            "post": {
+                "tags": [
+                    "Language Services"
+                ],
+                "summary": "Language detection",
+                "description": "Language detection can detect the language a document is written in, and returns a language code for a wide range of languages, variants, dialects, and some regional/cultural languages.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Detection object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Detect-language"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/DetectLanguageApiResponse"
+                        },
+                    "500":{
+                        "description": " Internal Server error"
+                        }
+                    }
+                }
+            }
+        },
+        "/pii": {
+            "post": {
+                "tags": [
+                    "Language Services"
+                ],
+                "summary": "Personally Identifiable Information (PII) detection",
+                "description": "The PII detection feature can identify, categorize, and redact sensitive information in unstructured text. For example: phone numbers, email addresses, and forms of identification. The method for utilizing PII in conversations is different than other use cases, and articles for this use have been separated.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Personally Identifiable Information (PII) detection object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Pii"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/DetectLanguageApiResponse"
+                        },
+                    "500":{
+                        "description": " Internal Server error"
+                        }
+                    }
+                }
+            }
+        },
+        "/entity_linking": {
+            "post": {
+                "tags": [
+                    "Language Services"
+                ],
+                "summary": "Entity linking",
+                "description": "Entity linking identifies and disambiguates the identity of entities found in text. For example, in the sentence 'We went to Seattle last week.', the word 'Seattle' would be identified, with a link to more information on Wikipedia.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Entity linking object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/EntityLinking"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/EntityLinkingApiResponse"
+                        },
+                    "500":{
+                        "description": " Internal Server error"
+                        }
+                    }
+                }
+            }
+        },
+        "/qa":{
+            "post": {
+                "tags": [
+                    "Language Services"
+                ],
+                "summary": "Question answering",
+                "description": "Question answering provides cloud-based Natural Language Processing (NLP) that allows you to create a natural conversational layer over your data. It is used to find the most appropriate answer for any input from your custom knowledge base (KB) of information",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Question and knowledge base object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/QNA"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/QNAApiResponse"
+                        },
+                    "500":{
+                        "description": " Internal Server error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "DetectLanguageApiResponse": {
+            "type": "object",
+            "properties": {
+                "detected_language": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "confidence_score": {
+                    "type": "string"
+                },
+                "abbv": {
+                    "type": "string"
+                }
+            }
+        },
+        "PiiApiResponse": {
+            "type": "array",
+            "items":{
+                "type":"object",
+                "properties": {
+                    "category": {
+                        "type": "string"
+                    },
+                    "confidence_score": {
+                        "type": "string"
+                    },
+                    "text": {
+                        "type": "string"
+                    }
+                }
+        }
+        },
+        "EntityLinkingApiResponse": {
+            "type": "array",
+            "items":{
+                "type":"object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "data_source": {
+                        "type": "string"
+                    },
+                    "matches": {
+                        "type": "object",
+                        "properties":{
+                            "confidence_score":{
+                                "type" : "string"
+                            },
+                            "text" :{
+                                "type" : "string"
+                            }
+                        }
+                    }
+                }
+        }
+        },
+        "QNAApiResponse": {
+            "type":"object",
+            "properties": {
+                "A": {
+                    "type": "string"
+                },
+                "Q": {
+                    "type": "string"
+                }
+            }
+        },
+        "Detect-language": {
+            "type": "object",
+            "required": [
+                "kind",
+                "parameters",
+                "analysisInput"
+            ],
+            "properties": {
+                "kind": {
+                    "type": "string",
+                    "example": "LanguageDetection"
+                },
+                "parameters": {
+                    "properties":{
+                        "modelVersion":{
+                            "type": "string",
+                            "example": "latest"
+                        }
+                    }
+                },
+                "analysisInput": {
+                    "properties":{
+                        "documents":{
+                            "type": "array",
+                            "xml": {
+                                "wrapped": true
+                            },
+                            "items": {
+                                "type": "object",
+                                "properties":{
+                                    "id":{
+                                        "type": "string",
+                                        "example": "1"
+                                    },
+                                    "text":{
+                                        "type":"string",
+                                        "example": "Type statement in any language"
+                                    }
+                                }
+                            }
+                        }
+                    }
+        }
+            }
+        },
+        "Pii": {
+            "type": "object",
+            "required": [
+                "kind",
+                "parameters",
+                "analysisInput"
+            ],
+            "properties": {
+                "kind": {
+                    "type": "string",
+                    "example": "PiiEntityRecognition"
+                },
+                "parameters": {
+                    "properties":{
+                        "modelVersion":{
+                            "type": "string",
+                            "example": "latest"
+                        }
+                    }
+                },
+                "analysisInput": {
+                    "properties":{
+                        "documents":{
+                            "type": "array",
+                            "xml": {
+                                "wrapped": true
+                            },
+                            "items": {
+                                "type": "object",
+                                "properties":{
+                                    "id":{
+                                        "type": "string",
+                                        "example": "1"
+                                    },
+                                    "language":{
+                                        "type":"string",
+                                        "example": "en"
+                                    },
+                                    "text":{
+                                        "type":"string",
+                                        "example": "Call our office at 312-555-1234, or send an email to support@contoso.com"
+                                    }
+                                }
+                            }
+                        }
+                    }
+        }
+            }
+        },
+        "EntityLinking": {
+            "type": "object",
+            "required": [
+                "kind",
+                "parameters",
+                "analysisInput"
+            ],
+            "properties": {
+                "kind": {
+                    "type": "string",
+                    "example": "EntityLinking"
+                },
+                "parameters": {
+                    "properties":{
+                        "modelVersion":{
+                            "type": "string",
+                            "example": "latest"
+                        }
+                    }
+                },
+                "analysisInput": {
+                    "properties":{
+                        "documents":{
+                            "type": "array",
+                            "xml": {
+                                "wrapped": true
+                            },
+                            "items": {
+                                "type": "object",
+                                "properties":{
+                                    "id":{
+                                        "type": "string",
+                                        "example": "1"
+                                    },
+                                    "language":{
+                                        "type":"string",
+                                        "example": "en"
+                                    },
+                                    "text":{
+                                        "type":"string",
+                                        "example": "Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975."
+                                    }
+                                }
+                            }
+                        }
+                    }
+        }
+            }
+        },
+        "QNA": {
+            "type": "object",
+            "required": [
+                "question",
+                "records",
+                "language",
+                "stringIndexType"
+            ],
+            "properties": {
+                "question": {
+                    "type": "string",
+                    "example": "How long does it takes to charge a surface?"
+                },
+                "language": {
+                    "type": "string",
+                    "example": "en"
+                },
+                "stringIndexType": {
+                    "type": "string",
+                    "example": "Utf16CodeUnit"
+                },
+                "records": {
+                    "type": "array",
+                    "xml": {
+                        "wrapped": true
+                    },
+                    "items":{
+                        "type": "object",
+                        "properties":{
+                            "id":{
+                                "type": "string",
+                                "example": "doc1"
+                            },
+                            "text":{
+                                "type":"string",
+                                "example": "Power and charging.It takes two to four hours to charge the Surface Pro 4 battery fully from an empty state. It can take longer if you\u0027re using your Surface for power-intensive activities like gaming or video streaming while you\u0027re charging it"
+                            }
+                        }
+                    }
+        }
+            }
+        }
+},
+    "externalDocs": {
+        "description": "Find out more about Swagger",
+        "url": "http://swagger.io"
+    }
+}
