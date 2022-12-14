@@ -78,7 +78,7 @@
                     "200": {
                         "description": "Successful operation",
                         "schema": {
-                            "$ref": "#/definitions/DetectLanguageApiResponse"
+                            "$ref": "#/definitions/PiiApiResponse"
                         },
                     "500":{
                         "description": " Internal Server error"
