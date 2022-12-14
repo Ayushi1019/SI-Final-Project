@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import requests
 import json
 from dotenv import load_dotenv
@@ -46,7 +46,7 @@ def detect_language():
             "abbv" : ele["detectedLanguage"]["iso6391Name"],
         }
         detected_languages.append(lang_obj)
-    return detected_languages
+    return jsonify(detected_languages)
 
 @app.route('/pii',methods = ['POST'])
 def pii():
@@ -66,7 +66,7 @@ def pii():
                 "confidence_score": entity["confidenceScore"]
             }
             pii_entities.append(curr_entity)
-    return pii_entities
+    return jsonify(pii_entities)
 
 
 @app.route('/entity_linking',methods = ['POST'])
@@ -87,7 +87,7 @@ def entity_linking():
                 "matches" : {"text":entity["matches"][0]["text"],"confidence_score": entity["matches"][0]["confidenceScore"]}
             }
             entities.append(curr_entity)
-    return entities
+    return jsonify(entities)
 
 
 @app.route('/qa',methods = ['POST'])
@@ -102,10 +102,11 @@ def qa():
     for ele in r.json()["answers"]:
         answers.append(ele["answer"])
 
-    return {"Q":question,"A":",".join(answers)}
+    return jsonify({"Q":question,"A":",".join(answers)})
 
 
 app.register_blueprint(swaggerui_blueprint)
 
 if __name__ == '__main__':
     app.run()
+

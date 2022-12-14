@@ -9,7 +9,7 @@ The project was to consume third party vendor APIs provided by Microsoft Azure C
  * Question and Answers 
 
 ### Tech Stack
-* Flask in Python
+* Flask - Python
 * Swagger
 
 ### Tools Required
@@ -194,13 +194,5 @@ The response is of the following format:
 ```
 
 where ```Q``` is the question asked and ```A``` is the answers given by the service based on the KB provided.
-
-
-
-
-
-
-
-
 
 
